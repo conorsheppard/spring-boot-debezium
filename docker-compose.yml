@@ -47,3 +47,17 @@ services:
       CONNECTOR_PLUGINS: io.debezium.connector.postgresql.PostgresConnector
     ports:
       - 8083:8083
+
+  spring-boot-debezium:
+    image: conorsheppard/spring-boot-debezium
+    container_name: spring-boot-debezium
+    depends_on:
+      - postgres
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bank
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    ports:
+      - "8080:8080"
