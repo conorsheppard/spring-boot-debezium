@@ -1,4 +1,4 @@
-package com.conorsheppard.controller;
+package com.conorsheppard.app.controller;
 
 import com.conorsheppard.app.entity.Account;
 import com.conorsheppard.app.repo.AccountRepository;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/accounts")
 public class AccountController {
 
     private final AccountRepository repo;
@@ -19,7 +19,7 @@ public class AccountController {
     }
 
     @PostMapping("/{id}/deposit")
-    public ResponseEntity<String> deposit(@PathVariable Long id, @RequestParam BigDecimal amount) {
+    public ResponseEntity<String> deposit(@PathVariable("id") Long id, @RequestParam BigDecimal amount) {
         Account acc = repo.findById(id).orElse(new Account());
         acc.setId(id);
         acc.setBalance(Optional.ofNullable(acc.getBalance()).orElse(BigDecimal.ZERO).add(amount));

@@ -14,6 +14,8 @@ curl -X POST http://localhost:8083/connectors \
       "database.server.name": "bank_server",
       "table.include.list": "public.account",
       "plugin.name": "pgoutput",
-      "slot.name": "debezium_slot"
+      "slot.name": "debezium_slot",
+      "topic.prefix": "bank_server",
+      "decimal.handling.mode": "string"
     }
   }'

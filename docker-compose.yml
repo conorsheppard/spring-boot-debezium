@@ -1,11 +1,13 @@
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.6.0
+    container_name: zookeeper-sbd
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
 
   kafka:
-    image: confluentinc/cp-kafka:7.6.0
+    image: confluentinc/cp-kafka:7.9.0
+    container_name: kafka-sbd
     depends_on:
       - zookeeper
     environment:
@@ -19,15 +21,18 @@ services:
 
   postgres:
     image: postgres:15
+    container_name: postgres-sbd
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: bank
     ports:
       - 5432:5432
+    command: ["postgres", "-c", "wal_level=logical", "-c", "max_replication_slots=10", "-c", "max_wal_senders=10"]
 
   connect:
     image: debezium/connect:2.6
+    container_name: debezium-connect-sbd
     depends_on:
       - kafka
       - postgres
