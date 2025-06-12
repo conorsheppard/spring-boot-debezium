@@ -1,7 +1,6 @@
 ### Instructions
 
 1. Execute `make`  
-(ensure the Spring Boot application has been built first)
 
 
 2. Register the connector
